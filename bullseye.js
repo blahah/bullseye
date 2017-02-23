@@ -4,6 +4,15 @@ var crossvent = require('crossvent');
 var throttle = require('./throttle');
 var tailormade = require('./tailormade');
 
+var nullRect = {
+  'bottom': 0,
+  'height': 0,
+  'left': 0,
+  'right': 0,
+  'top': 0,
+  'width': 0
+};
+
 function bullseye (el, target, options) {
   var o = options;
   var domTarget = target && target.tagName;
@@ -41,7 +50,7 @@ function bullseye (el, target, options) {
   function readNull () { return read(); }
 
   function read (readings) {
-    var bounds = target.getBoundingClientRect();
+    var bounds = !!target.parentElement ? target.getBoundingClientRect() : nullRect;
     var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
     if (tailor) {
       readings = tailor.read();
